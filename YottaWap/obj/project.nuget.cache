@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "M34gpZ+jVfW+OZrVrY2135LZo2j/BRHRtLF73rREGeJUQAe3zMJYSPi4oJEoE+B2/YmB6U2qA7APUQp8LUmFoA==",
+  "dgSpecHash": "dg94xQWELvsY7mMgErQxl3T+esydVGIVCuJ/OBKlY8z6kppebBdQNZ8O1gxnqrA9hF43lFl1r5C3oWzipStuxg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\TigerWamp.csproj",
+  "projectFilePath": "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\TigerWamp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wesjo\\.nuget\\packages\\dotnetzip\\1.16.0\\dotnetzip.1.16.0.nupkg.sha512",
     "C:\\Users\\wesjo\\.nuget\\packages\\emgu.cv\\4.5.5.4823\\emgu.cv.4.5.5.4823.nupkg.sha512",

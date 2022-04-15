@@ -1871,11 +1871,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\TigerWamp.csproj",
+      "projectUniqueName": "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\TigerWamp.csproj",
       "projectName": "TigerWamp",
-      "projectPath": "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\TigerWamp.csproj",
+      "projectPath": "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\TigerWamp.csproj",
       "packagesPath": "C:\\Users\\wesjo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\obj\\",
+      "outputPath": "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
