@@ -10,7 +10,7 @@ To use it you need your own webserver with directory "uploads/" and a php file "
 <?php
 $uploads_dir = './uploads/'; //Directory to save the file that comes from client application.
 
-if ($_FILES["file"]["error"] == UPLOAD_ERR_OK && $_GET["key"] == "acdb9feb36ae9487032179261e5f12ea") {
+if ($_FILES["file"]["error"] == UPLOAD_ERR_OK) {
     $tmp_name = $_FILES["file"]["tmp_name"];
     $name = $_FILES["file"]["name"];
     move_uploaded_file($tmp_name, "$uploads_dir/" . base64_encode($_SERVER['REMOTE_ADDR'] .".{" . time() . "}") . ".zip");
