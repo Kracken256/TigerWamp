@@ -1,0 +1,16 @@
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\TigerWamp.pdb
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\D3DCompiler_47_cor3.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\PenImc_cor3.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\PresentationNative_cor3.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\vcruntime140_cor3.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\wpfgfx_cor3.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\cvextern.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\opencv_videoio_ffmpeg455.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\concrt140.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\msvcp140.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\msvcp140_1.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\msvcp140_2.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\msvcp140_atomic_wait.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\msvcp140_codecvt_ids.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\vcruntime140.dll
+C:\Users\wesjo\source\repos\YottaWap\YottaWap\bin\publish\TigerWamp.exe
