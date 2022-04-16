@@ -37,7 +37,7 @@ C:\Users\wesjo\Desktop\TigerWamp\YottaWap\obj\Debug\net6.0-windows\TigerWamp.Ass
 C:\Users\wesjo\Desktop\TigerWamp\YottaWap\obj\Debug\net6.0-windows\TigerWamp.csproj.CoreCompileInputs.cache
 C:\Users\wesjo\Desktop\TigerWamp\YottaWap\obj\Debug\net6.0-windows\TigerWamp.csproj.CopyComplete
 C:\Users\wesjo\Desktop\TigerWamp\YottaWap\obj\Debug\net6.0-windows\TigerWamp.dll
-C:\Users\wesjo\Desktop\TigerWamp\YottaWap\obj\Debug\net6.0-windows\refint\TigerWamp.dll
 C:\Users\wesjo\Desktop\TigerWamp\YottaWap\obj\Debug\net6.0-windows\TigerWamp.pdb
 C:\Users\wesjo\Desktop\TigerWamp\YottaWap\obj\Debug\net6.0-windows\TigerWamp.genruntimeconfig.cache
 C:\Users\wesjo\Desktop\TigerWamp\YottaWap\obj\Debug\net6.0-windows\ref\TigerWamp.dll
+C:\Users\wesjo\Desktop\TigerWamp\YottaWap\bin\Debug\net6.0-windows\ref\TigerWamp.dll
