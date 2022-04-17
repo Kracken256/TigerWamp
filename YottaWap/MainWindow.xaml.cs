@@ -289,7 +289,46 @@ namespace YottaWap
                 command = command.Trim();
                 if (command != "mode default" && powershellMode)
                 {
-                    ExecutePowerShell(command);
+                    string[] parts = command.Split(' ');
+                    if (parts[0] == "cd")
+                    {
+                        string moveTo = command.Substring(2).Replace("/", "\\").Trim();
+
+                        if (parts.Length == 1)
+                        {
+                            string? path = Environment.GetEnvironmentVariable("USERPROFILE");
+                            if (path != null)
+                            {
+                                shellWorkingDirectory = path;
+                                return "";
+                            }
+                            else
+                            {
+                                return "%USERPROFILE% variable = null";
+                            }
+
+                        }
+                        if (!moveTo.Substring(1).StartsWith(":") && !moveTo.StartsWith("\\"))
+                        {
+                            if (shellWorkingDirectory.EndsWith("\\") && !moveTo.StartsWith("\\"))
+                            {
+                                shellWorkingDirectory += moveTo;
+                            }
+                            if (!shellWorkingDirectory.EndsWith("\\"))
+                            {
+                                shellWorkingDirectory += "\\" + moveTo;
+                            }
+                        }
+                        else if (moveTo.StartsWith("\\"))
+                        {
+                            shellWorkingDirectory = "C:\\";
+                        }
+                        else
+                        {
+                            return "Invalid path: \"" + shellWorkingDirectory + moveTo + "\"";
+                        }
+                    }
+                    return ExecutePowerShell(command);
                 }
                 else if (command == "mode default")
                 {
