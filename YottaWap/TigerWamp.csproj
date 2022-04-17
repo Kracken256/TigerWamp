@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cake.Powershell" Version="1.0.1" />
     <PackageReference Include="DotNetZip" Version="1.16.0" />
     <PackageReference Include="Emgu.CV" Version="4.5.5.4823" />
     <PackageReference Include="Emgu.CV.runtime.windows" Version="4.5.5.4823" />
