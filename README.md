@@ -26,3 +26,7 @@ Add this to your .htaccess file:
 RedirectMatch 404 ^/uploads/?$
 ```
 It will make sure that only the owners of the webserver can access the content.
+
+#Required for operation
+1. Make sure you have your own http server (with php) that will accept files.
+2. Make sure that you have your own server that can accept connections. Currently it uses my linode server IP. Change this I don't want your data!!!
