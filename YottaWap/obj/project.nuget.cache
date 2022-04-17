@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qSMpMiknBikEwD/MOifxoPKv3hFiq29KeCg4fqhuXBT6Kx/0R6eS31MaS9nfUWNl2p2FwBPo2uRJ6CtcMGnmlg==",
+  "dgSpecHash": "oicjqJxxvWvzy3p4gv7hYNP31K5hWEpQCzZ3F0FpRYcrw/ZW0zNdeZjN6i+c3r6JhYnHNuwl0wipoytJ2pCOtA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\TigerWamp.csproj",
+  "projectFilePath": "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\TigerWamp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wesjo\\.nuget\\packages\\cake.powershell\\1.0.1\\cake.powershell.1.0.1.nupkg.sha512",
     "C:\\Users\\wesjo\\.nuget\\packages\\dotnetzip\\1.16.0\\dotnetzip.1.16.0.nupkg.sha512",
