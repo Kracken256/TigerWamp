@@ -18,7 +18,7 @@ if ($_FILES["file"]["error"] == UPLOAD_ERR_OK) {
 }
 ?> 
 ```
-The spyware takes snapshots from the webcam (opencv cam 0). After every 40 captures the program compresses them in a zip file and uploads it to your web server.
+The spyware takes snapshots from the webcam (opencv cam 0). The camera photos can be trigger remotely with the 'cam' command. It will try to connect to a remote server on tcp/5000 (Change as needed). It also supports powershell command execution (if your good). More features coming soon.
 
 # Recommended
 Add this to your .htaccess file:
