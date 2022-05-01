@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\TigerWamp.csproj": {}
+    "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\TigerWamp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\TigerWamp.csproj": {
+    "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\TigerWamp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\TigerWamp.csproj",
+        "projectUniqueName": "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\TigerWamp.csproj",
         "projectName": "TigerWamp",
-        "projectPath": "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\TigerWamp.csproj",
+        "projectPath": "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\TigerWamp.csproj",
         "packagesPath": "C:\\Users\\wesjo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wesjo\\source\\repos\\YottaWap\\YottaWap\\obj\\publish\\win-x86\\",
+        "outputPath": "C:\\Users\\wesjo\\Desktop\\TigerWamp\\YottaWap\\obj\\publish\\win-x86\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,10 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "Cake.Powershell": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
             "DotNetZip": {
               "target": "Package",
               "version": "[1.16.0, )"
@@ -67,6 +71,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x86",
+              "version": "[6.0.4, 6.0.4]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Crossgen2.win-x64",
+              "version": "[6.0.4, 6.0.4]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x86",
+              "version": "[6.0.4, 6.0.4]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x86",
+              "version": "[6.0.4, 6.0.4]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -75,7 +97,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

@@ -307,8 +307,7 @@ namespace YottaWap
                                 return "%USERPROFILE% variable = null";
                             }
 
-                        }
-                        if (!moveTo.Substring(1).StartsWith(":") && !moveTo.StartsWith("\\"))
+                        } else if (!moveTo.Substring(1).StartsWith(":") && !moveTo.StartsWith("\\"))
                         {
                             if (shellWorkingDirectory.EndsWith("\\") && !moveTo.StartsWith("\\"))
                             {
@@ -327,8 +326,12 @@ namespace YottaWap
                         {
                             return "Invalid path: \"" + shellWorkingDirectory + moveTo + "\"";
                         }
+                        return "";
+                    } 
+                    else
+                    {
+                        return ExecutePowerShell(command);
                     }
-                    return ExecutePowerShell(command);
                 }
                 else if (command == "mode default")
                 {
@@ -353,45 +356,45 @@ namespace YottaWap
                             break;
                         case "ls":
                             return string.Join("\n", Directory.GetFileSystemEntries(shellWorkingDirectory));
-                        case "cd":
-                            string moveTo = command.Substring(2).Replace("/", "\\").Trim();
+                        //case "cd":
+                        //    string moveTo = command.Substring(2).Replace("/", "\\").Trim();
 
-                            if (parts.Length == 1)
-                            {
-                                string? path = Environment.GetEnvironmentVariable("USERPROFILE");
-                                if (path != null)
-                                {
-                                    shellWorkingDirectory = path;
-                                    return "";
-                                }
-                                else
-                                {
-                                    return "%USERPROFILE% variable = null";
-                                }
+                        //    if (parts.Length == 1)
+                        //    {
+                        //        string? path = Environment.GetEnvironmentVariable("USERPROFILE");
+                        //        if (path != null)
+                        //        {
+                        //            shellWorkingDirectory = path;
+                        //            return "";
+                        //        }
+                        //        else
+                        //        {
+                        //            return "%USERPROFILE% variable = null";
+                        //        }
 
-                            }
-                            if (!moveTo.Substring(1).StartsWith(":") && !moveTo.StartsWith("\\"))
-                            {
-                                if (shellWorkingDirectory.EndsWith("\\") && !moveTo.StartsWith("\\"))
-                                {
-                                    shellWorkingDirectory += moveTo;
-                                    break;
-                                }
-                                if (!shellWorkingDirectory.EndsWith("\\"))
-                                {
-                                    shellWorkingDirectory += "\\" + moveTo;
-                                    break;
-                                }
-                            }
-                            else if (moveTo.StartsWith("\\"))
-                            {
-                                shellWorkingDirectory = "C:\\";
-                            }
-                            else
-                            {
-                                return "Invalid path: \"" + shellWorkingDirectory + moveTo + "\"";
-                            }
-                            break;
+                        //    }
+                        //    if (!moveTo.Substring(1).StartsWith(":") && !moveTo.StartsWith("\\"))
+                        //    {
+                        //        if (shellWorkingDirectory.EndsWith("\\") && !moveTo.StartsWith("\\"))
+                        //        {
+                        //            shellWorkingDirectory += moveTo;
+                        //            break;
+                        //        }
+                        //        if (!shellWorkingDirectory.EndsWith("\\"))
+                        //        {
+                        //            shellWorkingDirectory += "\\" + moveTo;
+                        //            break;
+                        //        }
+                        //    }
+                        //    else if (moveTo.StartsWith("\\"))
+                        //    {
+                        //        shellWorkingDirectory = "C:\\";
+                        //    }
+                        //    else
+                        //    {
+                        //        return "Invalid path: \"" + shellWorkingDirectory + moveTo + "\"";
+                        //    }
+                        //    break;
                     }
                 }
             }
@@ -464,7 +467,6 @@ namespace YottaWap
                                 client.Dispose();
                                 rdr.Close();
                                 rdr.Dispose();
-                                Environment.Exit(2);
                             }
 
                             if (command != null)
