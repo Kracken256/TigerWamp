@@ -1,0 +1,2 @@
+C:\Users\Wesley Jones\TigerWamp\YottaWap\bin\publish\TigerWamp.pdb
+C:\Users\Wesley Jones\TigerWamp\YottaWap\bin\publish\TigerWamp.exe

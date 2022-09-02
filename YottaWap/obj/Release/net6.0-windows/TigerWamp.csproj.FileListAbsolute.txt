@@ -41,3 +41,27 @@ C:\Users\wesjo\source\repos\YottaWap\YottaWap\obj\Release\net6.0-windows\refint\
 C:\Users\wesjo\source\repos\YottaWap\YottaWap\obj\Release\net6.0-windows\TigerWamp.pdb
 C:\Users\wesjo\source\repos\YottaWap\YottaWap\obj\Release\net6.0-windows\TigerWamp.genruntimeconfig.cache
 C:\Users\wesjo\source\repos\YottaWap\YottaWap\obj\Release\net6.0-windows\ref\TigerWamp.dll
+C:\Users\Wesley Jones\TigerWamp\YottaWap\bin\Release\net6.0-windows\TigerWamp.exe
+C:\Users\Wesley Jones\TigerWamp\YottaWap\bin\Release\net6.0-windows\TigerWamp.deps.json
+C:\Users\Wesley Jones\TigerWamp\YottaWap\bin\Release\net6.0-windows\TigerWamp.runtimeconfig.json
+C:\Users\Wesley Jones\TigerWamp\YottaWap\bin\Release\net6.0-windows\TigerWamp.dll
+C:\Users\Wesley Jones\TigerWamp\YottaWap\bin\Release\net6.0-windows\TigerWamp.pdb
+C:\Users\Wesley Jones\TigerWamp\YottaWap\bin\Release\net6.0-windows\DotNetZip.dll
+C:\Users\Wesley Jones\TigerWamp\YottaWap\bin\Release\net6.0-windows\Emgu.CV.Platform.NetStandard.dll
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.csproj.AssemblyReference.cache
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\MainWindow.g.cs
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\App.g.cs
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp_MarkupCompile.cache
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp_MarkupCompile.lref
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\MainWindow.baml
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.g.resources
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.AssemblyInfoInputs.cache
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.AssemblyInfo.cs
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.csproj.CoreCompileInputs.cache
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.csproj.CopyComplete
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.dll
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\refint\TigerWamp.dll
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.pdb
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\TigerWamp.genruntimeconfig.cache
+C:\Users\Wesley Jones\TigerWamp\YottaWap\obj\Release\net6.0-windows\ref\TigerWamp.dll
